@@ -1,5 +1,7 @@
 package com.revtekk
 
+import com.revtekk.tree.Treap
+
 fun main() {
 
     val treap = Treap<Int, Int>()
