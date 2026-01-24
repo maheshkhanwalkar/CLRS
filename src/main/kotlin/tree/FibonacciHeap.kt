@@ -83,14 +83,16 @@ class FibonacciHeap<K: Comparable<K>> {
             child.insert(this.min!!)
         }
 
-        /*
-         * Remove min from the root list and consolidate.
-         * We set the new min temporarily to the next node in the root list,
-         * but this will be properly set in the consolidation step
-         */
         if (this.min!!.next == min) {
+            // Heap is empty, so there is no min
             this.min = null
         } else {
+            /*
+             * Remove min from the root list and consolidate.
+             *
+             * We set the new min temporarily to the next node in the root list,
+             * but this will be properly set in the consolidation step
+             */
             this.min = min.next
             min.remove()
             consolidate()
@@ -141,6 +143,7 @@ class FibonacciHeap<K: Comparable<K>> {
 
         val startPos = A.indexOf(this.min)
 
+        // Rebuild the root list and determine the new min
         for (i in startPos + 1 until size) {
             // Ignore null nodes
             val currNode = A[i] ?: continue
@@ -153,7 +156,7 @@ class FibonacciHeap<K: Comparable<K>> {
     }
 
     private fun link(parent: FibonacciNode<K>, child: FibonacciNode<K>) {
-        /**
+        /*
          * H: [...] <---> parent <---> [...]
          *               /
          *            child
