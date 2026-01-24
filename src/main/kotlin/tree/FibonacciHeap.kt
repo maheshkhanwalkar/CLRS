@@ -1,11 +1,14 @@
 package com.revtekk.tree
 
-import kotlin.math.ceil
-import kotlin.math.log2
+import kotlin.math.floor
+import kotlin.math.log
+import kotlin.math.sqrt
 
 class FibonacciHeap<K: Comparable<K>> {
     private var n = 0
     private var min: FibonacciNode<K>? = null
+
+    private val PHI = (1 + sqrt(5.0)) / 2
 
     fun insert(key: K) {
         if (min == null) {
@@ -105,9 +108,9 @@ class FibonacciHeap<K: Comparable<K>> {
     fun size(): Int = this.n
 
     private fun consolidate() {
-        // Size of the array is log2(n) -- as there will be at most log2(n) trees with different
-        // degrees, we can use an array of size log2(n) to store them
-        val size = ceil(log2(this.n.toDouble())).toInt()
+        // Size of the array is log_phi(n) -- as there will be at most log_phi(n) trees
+        // with different degrees.
+        val size = floor(log(this.n.toDouble(), PHI)).toInt()
         val A = Array<FibonacciNode<K>?>(size, { null })
 
         var currNode = this.min!!
